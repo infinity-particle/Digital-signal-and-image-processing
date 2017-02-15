@@ -26,8 +26,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcustomplot.cpp \
-    graphicwidget.cpp
+    graphicwidget.cpp \
+    complex.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
-    graphicwidget.h
+    graphicwidget.h \
+    complex.h
