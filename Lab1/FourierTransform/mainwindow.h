@@ -2,17 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QLabel>
-#include <QVBoxLayout>
 #include <QWidget>
-#include <QGraphicsView>
-#include <QPen>
-#include <QGraphicsScene>
-#include "qcustomplot.h"
-#include <QDebug>
-
-#define RANGE 10
-
+#include <QTabWidget>
+#include <qcustomplot.h>
+#include <graphicwidget.h>
 
 class MainWindow : public QMainWindow
 {
@@ -22,14 +15,11 @@ class MainWindow : public QMainWindow
         MainWindow(QWidget *parent = 0);
         ~MainWindow();
 
-    private slots:
-        void drawThePlot();
-
     private:
-        QVBoxLayout *mainLayout;
         QWidget *centralWidget;
-        QPushButton* plotButton;
-        QCustomPlot* customPlot;
+        QTabWidget *tabWidget;
+        GraphicWidget *graphicWidget;
+
 };
 
 #endif // MAINWINDOW_H

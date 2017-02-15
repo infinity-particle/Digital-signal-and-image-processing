@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../FourierTransform -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib/qt/mkspecs/linux-g++
+INCPATH       = -I../FourierTransform -I. -isystem /usr/include/qt -isystem /usr/include/qt/QtPrintSupport -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = FourierTransform1.0.0
 DISTDIR = /home/sergey/Универ/ЦОСиИ/DSaIP/Lab1/build-FourierTransform-Desktop-Debug/.tmp/FourierTransform1.0.0
 LINK          = g++
 LFLAGS        = 
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lQt5PrintSupport -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -49,10 +49,18 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../FourierTransform/main.cpp \
-		../FourierTransform/mainwindow.cpp moc_mainwindow.cpp
+		../FourierTransform/mainwindow.cpp \
+		../FourierTransform/qcustomplot.cpp \
+		../FourierTransform/graphicwidget.cpp moc_mainwindow.cpp \
+		moc_qcustomplot.cpp \
+		moc_graphicwidget.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		qcustomplot.o \
+		graphicwidget.o \
+		moc_mainwindow.o \
+		moc_qcustomplot.o \
+		moc_graphicwidget.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -210,6 +218,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../FourierTransform/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -229,8 +238,12 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../FourierTransform/FourierTransform.pro ../FourierTransform/mainwindow.h ../FourierTransform/main.cpp \
-		../FourierTransform/mainwindow.cpp
+		../FourierTransform/FourierTransform.pro ../FourierTransform/mainwindow.h \
+		../FourierTransform/qcustomplot.h \
+		../FourierTransform/graphicwidget.h ../FourierTransform/main.cpp \
+		../FourierTransform/mainwindow.cpp \
+		../FourierTransform/qcustomplot.cpp \
+		../FourierTransform/graphicwidget.cpp
 QMAKE_TARGET  = FourierTransform
 DESTDIR       = 
 TARGET        = FourierTransform
@@ -399,6 +412,7 @@ Makefile: ../FourierTransform/FourierTransform.pro /usr/lib/qt/mkspecs/linux-g++
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -419,6 +433,7 @@ Makefile: ../FourierTransform/FourierTransform.pro /usr/lib/qt/mkspecs/linux-g++
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		../FourierTransform/FourierTransform.pro \
+		/usr/lib/libQt5PrintSupport.prl \
 		/usr/lib/libQt5Widgets.prl \
 		/usr/lib/libQt5Gui.prl \
 		/usr/lib/libQt5Core.prl
@@ -580,6 +595,7 @@ Makefile: ../FourierTransform/FourierTransform.pro /usr/lib/qt/mkspecs/linux-g++
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -600,6 +616,7 @@ Makefile: ../FourierTransform/FourierTransform.pro /usr/lib/qt/mkspecs/linux-g++
 /usr/lib/qt/mkspecs/features/yacc.prf:
 /usr/lib/qt/mkspecs/features/lex.prf:
 ../FourierTransform/FourierTransform.pro:
+/usr/lib/libQt5PrintSupport.prl:
 /usr/lib/libQt5Widgets.prl:
 /usr/lib/libQt5Gui.prl:
 /usr/lib/libQt5Core.prl:
@@ -618,8 +635,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FourierTransform/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FourierTransform/main.cpp ../FourierTransform/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FourierTransform/mainwindow.h ../FourierTransform/qcustomplot.h ../FourierTransform/graphicwidget.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FourierTransform/main.cpp ../FourierTransform/mainwindow.cpp ../FourierTransform/qcustomplot.cpp ../FourierTransform/graphicwidget.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -651,13 +668,26 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_qcustomplot.cpp moc_graphicwidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: ../FourierTransform/mainwindow.h \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_qcustomplot.cpp moc_graphicwidget.cpp
+moc_mainwindow.cpp: ../FourierTransform/qcustomplot.h \
+		../FourierTransform/graphicwidget.h \
+		../FourierTransform/mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
-	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/sergey/Универ/ЦОСиИ/DSaIP/Lab1/FourierTransform -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include-fixed -I/usr/include ../FourierTransform/mainwindow.h -o moc_mainwindow.cpp
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/sergey/Универ/ЦОСиИ/DSaIP/Lab1/FourierTransform -I/usr/include/qt -I/usr/include/qt/QtPrintSupport -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include-fixed -I/usr/include ../FourierTransform/mainwindow.h -o moc_mainwindow.cpp
+
+moc_qcustomplot.cpp: ../FourierTransform/qcustomplot.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/sergey/Универ/ЦОСиИ/DSaIP/Lab1/FourierTransform -I/usr/include/qt -I/usr/include/qt/QtPrintSupport -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include-fixed -I/usr/include ../FourierTransform/qcustomplot.h -o moc_qcustomplot.cpp
+
+moc_graphicwidget.cpp: ../FourierTransform/qcustomplot.h \
+		../FourierTransform/graphicwidget.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/sergey/Универ/ЦОСиИ/DSaIP/Lab1/FourierTransform -I/usr/include/qt -I/usr/include/qt/QtPrintSupport -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/6.3.1 -I/usr/include/c++/6.3.1/x86_64-pc-linux-gnu -I/usr/include/c++/6.3.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.1/include-fixed -I/usr/include ../FourierTransform/graphicwidget.h -o moc_graphicwidget.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -673,14 +703,31 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../FourierTransform/main.cpp ../FourierTransform/mainwindow.h
+main.o: ../FourierTransform/main.cpp ../FourierTransform/mainwindow.h \
+		../FourierTransform/qcustomplot.h \
+		../FourierTransform/graphicwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FourierTransform/main.cpp
 
-mainwindow.o: ../FourierTransform/mainwindow.cpp ../FourierTransform/mainwindow.h
+mainwindow.o: ../FourierTransform/mainwindow.cpp ../FourierTransform/mainwindow.h \
+		../FourierTransform/qcustomplot.h \
+		../FourierTransform/graphicwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FourierTransform/mainwindow.cpp
+
+qcustomplot.o: ../FourierTransform/qcustomplot.cpp ../FourierTransform/qcustomplot.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qcustomplot.o ../FourierTransform/qcustomplot.cpp
+
+graphicwidget.o: ../FourierTransform/graphicwidget.cpp ../FourierTransform/graphicwidget.h \
+		../FourierTransform/qcustomplot.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o graphicwidget.o ../FourierTransform/graphicwidget.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_qcustomplot.o: moc_qcustomplot.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp
+
+moc_graphicwidget.o: moc_graphicwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_graphicwidget.o moc_graphicwidget.cpp
 
 ####### Install
 
