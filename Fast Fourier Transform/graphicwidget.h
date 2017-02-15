@@ -3,9 +3,12 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <qcustomplot.h>
 #include <QLabel>
+#include <QLineEdit>
+#include <algorithm>
 
 class GraphicWidget : public QWidget{
 
@@ -22,6 +25,9 @@ class GraphicWidget : public QWidget{
         QVBoxLayout *mainLayout;
         QWidget *centralWidget;
         QPushButton* plotButton;
+        QLineEdit* leftLimitInput;
+        QLineEdit* rightLimitInput;
+        QLineEdit* stepInput;
         QCustomPlot* customPlot;
 };
 
