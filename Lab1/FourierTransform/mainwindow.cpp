@@ -3,34 +3,41 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    widget = new QWidget();
-    layout = new QVBoxLayout();
-    label = new QLabel("Тут должны быть графики, формулы и т.д.");
-    pen = new QPen(Qt::green);
-    scene = new QGraphicsScene();
-    scene->addLine(0, 90, 180, 90, *pen);
-    scene->addLine(90, 0, 90, 180, *pen);
+    centralWidget = new QWidget();
+    mainLayout = new QVBoxLayout();
+    plotButton = new QPushButton("Plot!");
+    connect(plotButton,SIGNAL(clicked(bool)),this,SLOT(drawThePlot()));
+    customPlot = new QCustomPlot();
 
-    view = new QGraphicsView();
-    view->setScene(scene);
-    layout->addWidget(label);
-    layout->addWidget(view);
-    widget->setLayout(layout);
-    this->setCentralWidget(widget);
-    double x[2];
-    double y[2];
-    x[0]=y[0] = x[1] = y[1] = 0;
-    pen->setColor(Qt::red);
-    for(double i=-5;i<5;i+=0.5)
-    {
-        x[0] = x[1];
-        y[0] =4*x[0]*x[0]-20;
-        x[1] = i;
-        y[1] = 4*x[1]*x[1]-20;
-        if(i!=-5)
-         scene->addLine(x[0]+90, 90-y[0], x[1]+90, 90-y[1], *pen);
+    mainLayout->addWidget(customPlot);
+    mainLayout->addWidget(plotButton);
+
+    centralWidget->setLayout(mainLayout);
+
+    this->setCentralWidget(centralWidget);
+    this->setMinimumSize(600,600);
+}
+
+void MainWindow::drawThePlot(){
+    double K = -10.0;
+    double step = 0.01;
+    QVector<double> x(2000),y(2000);
+    for(int i = 0; i < 2000; i++){
+        x[i] = K + i * step;
+        qDebug() << x[i];
+        y[i] = sin(x[i]) + cos(4 * x[i]);
     }
 
+    customPlot->addGraph();
+    customPlot->graph(0)->setData(x,y);
+    customPlot->graph(0)->setAntialiased(true);
+    customPlot->xAxis->setLabel("x");
+    customPlot->yAxis->setLabel("y");
+
+    customPlot->xAxis->setRange(-10,10);
+    customPlot->yAxis->setRange(-2,2);
+
+    customPlot->replot();
 }
 
 MainWindow::~MainWindow()
