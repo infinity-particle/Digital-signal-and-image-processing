@@ -5,6 +5,10 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QGraphicsView>
+#include <QPen>
+#include <QGraphicsScene>
+
 
 class MainWindow : public QMainWindow
 {
@@ -13,6 +17,10 @@ class MainWindow : public QMainWindow
 private:
     QVBoxLayout *layout;
     QLabel *label;
+    QGraphicsScene *scene;
+    QPen *pen;
+    QGraphicsView *view;
+    QWidget *widget;
 
 public:
     MainWindow(QWidget *parent = 0);
