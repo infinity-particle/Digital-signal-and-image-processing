@@ -4,8 +4,11 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QTabWidget>
+#include <QDebug>
+#include <QVector>
 #include <qcustomplot.h>
-#include <graphicwidget.h>
+#include "tab.h"
+#include "algorithm.h"
 
 class MainWindow : public QMainWindow
 {
@@ -18,8 +21,6 @@ class MainWindow : public QMainWindow
     private:
         QWidget *centralWidget;
         QTabWidget *tabWidget;
-        GraphicWidget *graphicWidget;
-
 };
 
 #endif // MAINWINDOW_H

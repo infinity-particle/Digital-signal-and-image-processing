@@ -1,17 +1,24 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-{
-    graphicWidget = new GraphicWidget();
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget();
     tabWidget = new QTabWidget();
 
-    //tabWidget->setMinimumSize(600, 600);
-    tabWidget->addTab(graphicWidget,"Usual graphic");
-    tabWidget->addTab(new QWidget(),"Amplitude spectrum");
-    tabWidget->addTab(new QWidget(),"Frequency range");
-    tabWidget->addTab(new QWidget(),"Inverse transformation");
+    qreal step = 0.001;
+    qint64 vectorSize = 10/step;
+
+    QVector<qreal> x(vectorSize), y(vectorSize);
+
+    qDebug() << "Fill vectors...";
+    x = fillWithStep(vectorSize, 0, step);
+    y = function(x);
+    qDebug() << "Done.";
+
+    QPair<QVector<qreal>, QVector<qreal>> values;
+    values.first = x;
+    values.second = y;
+
+    tabWidget->addTab(new Tab(values, GENERAL), "Source function");
 
     QVBoxLayout* main = new QVBoxLayout();
     main->addWidget(tabWidget);
