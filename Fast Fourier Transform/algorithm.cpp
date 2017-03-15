@@ -1,6 +1,6 @@
 #include "algorithm.h"
 
-QVector<std::complex<qreal>> DFT(const QVector<qreal>& functionValues, const QVector<qreal>& argumentValues){
+QVector<std::complex<qreal>> discreteFourierTransform(const QVector<qreal>& functionValues){
     QVector<std::complex<qreal>>* result = new QVector<std::complex<qreal>>();
     unsigned int size = functionValues.length();
 
@@ -18,6 +18,29 @@ QVector<std::complex<qreal>> DFT(const QVector<qreal>& functionValues, const QVe
     }
 
     return *result;
+}
+
+QVector<qreal> inverseDiscreteDourierTransform(const QVector<std::complex<qreal> > &values){
+    QVector<qreal>* result = new QVector<qreal>();
+    qint64 size = values.length();
+
+    for (qint64 n = 0; n < size; n++) {
+        qreal sum = 0.0;
+
+        for (qint64 m = 0; m < size; m++) {
+            qreal angle = 2 * M_PI * n * m / size;
+            qreal realPart = values.at(m).real() * qCos(angle) - values.at(m).imag() * qSin(angle);
+
+            sum += realPart;
+        }
+        result->push_back(sum/size);
+    }
+
+    return *result;
+}
+
+QVector<std::complex<qreal>> fastFourierTransform(const QVector<qreal> &functionValues){
+
 }
 
 QVector<qreal> function(const QVector<qreal>& argument){
@@ -55,7 +78,6 @@ qint64 getPeriod(const QVector<qreal> &array){
     qint64 startIndex = 0, endIndex = 0, count = 0;
     for(qint64 i = 0; i < array.length(); i++){
         if(compareWithEpsilon(roundWithPrecision(array.at(i),4), roundWithPrecision(max, 4))){
-            qDebug() << "Got it!";
             if(count == 0){
                 startIndex = i;
                 count++;

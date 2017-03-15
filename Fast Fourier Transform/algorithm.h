@@ -7,7 +7,11 @@
 #include <QDebug>
 #include <QtMath>
 
-QVector<std::complex<qreal>> DFT(const QVector<qreal>& functionValues, const QVector<qreal>& argumentValues);
+QVector<std::complex<qreal>> discreteFourierTransform(const QVector<qreal>& functionValues);
+QVector<qreal> inverseDiscreteDourierTransform(const QVector<std::complex<qreal>>& values);
+QVector<std::complex<qreal>> fastFourierTransform(const QVector<qreal>& functionValues);
+
+
 QVector<qreal> function(const QVector<qreal>& argument);
 QVector<qreal> fillWithStep(qint64 size, qreal startValue, qreal step);
 qreal getMax(const QVector<qreal>& array);

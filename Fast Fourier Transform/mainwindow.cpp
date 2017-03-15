@@ -16,7 +16,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     values.first = x;
     values.second = y;
 
-    tabWidget->addTab(new Tab(values, GENERAL), "Source function");
+    tabWidget->addTab(new Tab(values, GENERAL), "Source");
+    tabWidget->addTab(new Tab(values, AMPLITUDE), "Amplitude");
+    tabWidget->addTab(new Tab(values, FREQUENCY), "Frequency");
+    tabWidget->addTab(new Tab(values, INVERSE), "Inverse");
 
     QVBoxLayout* main = new QVBoxLayout();
     main->addWidget(tabWidget);
