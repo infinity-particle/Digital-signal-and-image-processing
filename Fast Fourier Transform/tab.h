@@ -8,6 +8,7 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include "qcustomplot.h"
+#include "algorithm.h"
 
 enum TabType{
     GENERAL,

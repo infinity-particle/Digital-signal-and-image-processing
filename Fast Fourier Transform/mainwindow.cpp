@@ -4,15 +4,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     centralWidget = new QWidget();
     tabWidget = new QTabWidget();
 
-    qreal step = 0.001;
+    qreal step = 0.01;
     qint64 vectorSize = 10/step;
 
     QVector<qreal> x(vectorSize), y(vectorSize);
 
-    qDebug() << "Fill vectors...";
     x = fillWithStep(vectorSize, 0, step);
     y = function(x);
-    qDebug() << "Done.";
 
     QPair<QVector<qreal>, QVector<qreal>> values;
     values.first = x;

@@ -4,17 +4,17 @@ QVector<std::complex<qreal>> DFT(const QVector<qreal>& functionValues, const QVe
     QVector<std::complex<qreal>>* result = new QVector<std::complex<qreal>>();
     unsigned int size = functionValues.length();
 
-    for (unsigned int k = 0; k < size; k++) {
+    for (unsigned int m = 0; m < size; m++) {
         std::complex<qreal> sum = 0.0;
 
-        for (unsigned int t = 0; t < size; t++) {
-            double angle = 2 * M_PI * t * k / size;
-            double realPart = argumentValues.at(t) * cos(angle) + functionValues.at(t) * sin(angle);
-            double imaginePart = -argumentValues.at(t) * sin(angle) + functionValues.at(t) * cos(angle);
+        for (unsigned int n = 0; n < size; n++) {
+            double angle = 2 * M_PI * n * m / size;
+            double realPart = functionValues.at(n) * cos(angle);
+            double imaginePart = -functionValues.at(n) * sin(angle);
 
             sum += std::complex<qreal>(realPart,imaginePart);
         }
-        result->insert(k, sum);
+        result->push_back(sum);
     }
 
     return *result;
@@ -25,7 +25,6 @@ QVector<qreal> function(const QVector<qreal>& argument){
 
     for(qint64 i = 0; i < argument.length(); i++){
         functionValues->append(qSin(argument.at(i)) + qCos(4.0f * argument.at(i)));
-        qDebug() << functionValues->at(i);
     }
 
     return *functionValues;
@@ -38,4 +37,51 @@ QVector<qreal> fillWithStep(qint64 size, qreal startValue, qreal step){
         startValue += step;
     }
     return array;
+}
+
+qreal getMax(const QVector<qreal> &array){
+    qreal max = array.at(0);
+    for(qint64 i = 1; i < array.length(); i++){
+        if(array.at(i) > max){
+            max = array.at(i);
+        }
+    }
+    return max;
+}
+
+qint64 getPeriod(const QVector<qreal> &array){
+    qreal max = getMax(array);
+
+    qint64 startIndex = 0, endIndex = 0, count = 0;
+    for(qint64 i = 0; i < array.length(); i++){
+        if(compareWithEpsilon(roundWithPrecision(array.at(i),4), roundWithPrecision(max, 4))){
+            qDebug() << "Got it!";
+            if(count == 0){
+                startIndex = i;
+                count++;
+            }else{
+                if(count == 1){
+                    endIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+    return endIndex - startIndex;
+}
+
+qreal roundWithPrecision(qreal number, qint64 precision){
+    QString numberString = QString::number(number);
+
+    return numberString.left(numberString.indexOf(".") + precision + 1).toDouble();
+}
+
+bool compareWithEpsilon(qreal first, qreal second){
+    const qreal epsilon = 0.0001;
+    qreal diff = qAbs(first - second);
+    if(diff <= epsilon){
+        return true;
+    }else{
+        return false;
+    }
 }
