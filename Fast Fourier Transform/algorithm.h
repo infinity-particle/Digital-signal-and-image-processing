@@ -8,7 +8,7 @@
 #include <QtMath>
 
 QVector<std::complex<qreal>> discreteFourierTransform(const QVector<qreal>& functionValues);
-QVector<qreal> inverseDiscreteDourierTransform(const QVector<std::complex<qreal>>& values);
+QVector<qreal> inverseDiscreteFourierTransform(const QVector<std::complex<qreal>>& values);
 QVector<std::complex<qreal>> fastFourierTransform(const QVector<qreal>& functionValues);
 
 
@@ -18,5 +18,6 @@ qreal getMax(const QVector<qreal>& array);
 qint64 getPeriod(const QVector<qreal>& array);
 qreal roundWithPrecision(qreal number, qint64 precision = 3);
 bool compareWithEpsilon(qreal first, qreal second);
+QVector<qreal> getDiscretValues(const QVector<qreal>& values, qint64 step);
 
 #endif // ALGORITHM_H

@@ -20,7 +20,7 @@ QVector<std::complex<qreal>> discreteFourierTransform(const QVector<qreal>& func
     return *result;
 }
 
-QVector<qreal> inverseDiscreteDourierTransform(const QVector<std::complex<qreal> > &values){
+QVector<qreal> inverseDiscreteFourierTransform(const QVector<std::complex<qreal>> &values){
     QVector<qreal>* result = new QVector<qreal>();
     qint64 size = values.length();
 
@@ -106,4 +106,12 @@ bool compareWithEpsilon(qreal first, qreal second){
     }else{
         return false;
     }
+}
+
+QVector<qreal> getDiscretValues(const QVector<qreal>& values, qint64 step){
+    QVector<qreal>* discretValues = new QVector<qreal>();
+    for(qint64 i = 0; i < values.length(); i += step){
+        discretValues->push_back(values.at(i));
+    }
+    return *discretValues;
 }

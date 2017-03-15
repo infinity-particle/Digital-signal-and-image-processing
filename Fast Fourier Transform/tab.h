@@ -17,7 +17,7 @@ enum TabType{
     INVERSE
 };
 
-#define NUMBER_OF_COUNTS 64
+#define NUMBER_OF_COUNTS 16
 
 typedef QPair<QVector<qreal>, QVector<qreal>> Coordinates;
 typedef QVector<std::complex<qreal>> FourierSeries;
@@ -29,7 +29,7 @@ class Tab : public QWidget{
     Q_OBJECT
 
     public:
-        Tab(const Coordinates& values, TabType type);
+        Tab(const QPair<QVector<qreal>, QVector<qreal>>& sourceValues, TabType type);
     private:
         void general();
         void amplitude();
@@ -37,7 +37,14 @@ class Tab : public QWidget{
         void inverse();
 
         QCustomPlot* plot;
-        Coordinates* values;
+
+        QPair<QVector<qreal>, QVector<qreal>>* values;
+        QPair<QVector<qreal>, QVector<qreal>>* period;
+        QPair<QVector<qreal>, QVector<qreal>>* discretValues;
+
+        QVector<std::complex<qreal>>* DFTValues;
+        QVector<std::complex<qreal>>* FFTValues;
+
         qint64 periodSize;
         QVBoxLayout* mainLayout;
 };
