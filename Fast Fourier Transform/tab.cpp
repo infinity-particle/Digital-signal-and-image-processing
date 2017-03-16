@@ -30,7 +30,17 @@ void Tab::general(){
     plot->xAxis->setRange(0, 7);
     plot->yAxis->setRange(-2, 2);
 
+<<<<<<< HEAD
     plot->graph(0)->setData(this->f->getX(), this->f->getY());
+=======
+    QVector<qreal> x,y;
+    for(qint64 i = 0; i < values->length(); i++){
+        x.append(this->values->at(i).real());
+        y.append(this->values->at(i).imag());
+    }
+
+    plot->graph(0)->setData(x, y);
+>>>>>>> 0ce9bd2150f1d75b06b1acf5b9b1e03bbbdca0b6
 
     this->mainLayout->addWidget(plot);
     this->setLayout(mainLayout);

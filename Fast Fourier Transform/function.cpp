@@ -20,7 +20,11 @@ Function::Function(const QVector<qreal>& x, qreal (*f)(qreal)){
         y->append(f(x.at(i)));
     }
 
+<<<<<<< HEAD
     this->periodSize = countPeriodSize();
+=======
+    this->periodSize = getPeriodSize();
+>>>>>>> 0ce9bd2150f1d75b06b1acf5b9b1e03bbbdca0b6
     this->period = new QVector<qreal>();
     this->period = getPeriod();
 }
@@ -46,10 +50,14 @@ qreal Function::getMaxt(bool flag){
 }
 
 Function::Function(const Function &f){
+<<<<<<< HEAD
     this->x = new QVector<qreal>(f.getX());
     this->y = new QVector<qreal>(f.getY());
     this->period = new QVector<qreal>(f.getPeriod());
     this->periodSize = f.getPeriodSize();
+=======
+
+>>>>>>> 0ce9bd2150f1d75b06b1acf5b9b1e03bbbdca0b6
 }
 
 QVector<qreal> Function::getDiscretValues(qint64 step, bool flag){
@@ -67,7 +75,11 @@ QVector<qreal> Function::getDiscretValues(qint64 step, bool flag){
     return *discretValues;
 }
 
+<<<<<<< HEAD
 qint64 Function::countPeriodSize(){
+=======
+qint64 Function::getPeriodSize(){
+>>>>>>> 0ce9bd2150f1d75b06b1acf5b9b1e03bbbdca0b6
     qreal max = getMax();
 
     qint64 startIndex = 0, endIndex = 0, count = 0;
@@ -91,6 +103,7 @@ QVector<qreal> Function::getPeriod(){
     return this->period;
 }
 
+<<<<<<< HEAD
 qint64 Function::getPeriodSize(){
     return this->periodSize;
 }
@@ -103,4 +116,6 @@ QVector<qreal> Function::getY(){
     return this->y;
 }
 
+=======
+>>>>>>> 0ce9bd2150f1d75b06b1acf5b9b1e03bbbdca0b6
 
