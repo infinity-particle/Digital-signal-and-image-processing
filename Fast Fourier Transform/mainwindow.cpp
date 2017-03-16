@@ -7,14 +7,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     qreal step = 0.01;
     qint64 vectorSize = 10/step;
 
-    QVector<qreal> x(vectorSize), y(vectorSize);
+    QVector<qreal> x(vectorSize);
 
     x = fillWithStep(vectorSize, 0, step);
-    y = function(x);
 
-    QPair<QVector<qreal>, QVector<qreal>> values;
-    values.first = x;
-    values.second = y;
+    Function f(x);
 
     tabWidget->addTab(new Tab(values, GENERAL), "Source");
     tabWidget->addTab(new Tab(values, AMPLITUDE), "Amplitude");

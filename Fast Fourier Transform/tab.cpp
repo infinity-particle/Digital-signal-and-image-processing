@@ -1,22 +1,9 @@
 #include "tab.h"
 
-Tab::Tab(const QPair<QVector<qreal>, QVector<qreal>>& sourceValues, TabType type){
+Tab::Tab(const Function &f, TabType type){
     this->plot = new QCustomPlot();
     this->mainLayout = new QVBoxLayout();
-
-    values = new QPair<QVector<qreal>, QVector<qreal>>(sourceValues.first, sourceValues.second);
-    periodSize = getPeriod(values->second);
-
-    qint64 step = periodSize/NUMBER_OF_COUNTS;
-
-    period = new QPair<QVector<qreal>, QVector<qreal>>(values->first.mid(0, periodSize + 1), values->second.mid(0, periodSize + 1));
-
-    discretValues = new QPair<QVector<qreal>, QVector<qreal>>();
-    discretValues->first = getDiscretValues(period->first, step);
-    discretValues->second = getDiscretValues(period->second, step);
-
-    DFTValues = new QVector<std::complex<qreal>>(discreteFourierTransform(discretValues->second));
-    FFTValues = new QVector<std::complex<qreal>>();
+    this->values = new Function(f);
 
     switch(type){
         case GENERAL: {
@@ -42,7 +29,14 @@ void Tab::general(){
     plot->graph(0)->setPen(QPen(Qt::blue));
     plot->xAxis->setRange(0, 7);
     plot->yAxis->setRange(-2, 2);
-    plot->graph(0)->setData(period->first, period->second);
+
+    QVector<qreal> x,y;
+    for(qint64 i = 0; i < values->length(); i++){
+        x.append(this->values->at(i).real());
+        y.append(this->values->at(i).imag());
+    }
+
+    plot->graph(0)->setData(x, y);
 
     this->mainLayout->addWidget(plot);
     this->setLayout(mainLayout);
@@ -88,7 +82,8 @@ void Tab::frequency(){
     plot->xAxis->setRange(0, NUMBER_OF_COUNTS + 1);
     plot->yAxis->setRange(-100, 100);
 
-    plot->graph(0)->setName("Discrete Fourier Transform");
+    //plot->graph(0)->setName("Discrete Fourier Transform");
+    plot->graph(0)->setName("Fast Fourier Transform");
 
     plot->graph(0)->setLineStyle(QCPGraph::lsImpulse);
     plot->graph(0)->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, 5));
@@ -101,7 +96,7 @@ void Tab::frequency(){
 }
 
 void Tab::inverse(){
-    QVector<qreal> source = inverseDiscreteFourierTransform(*this->DFTValues);
+    QVector<qreal> source = inverseDiscreteFourierTransform(*(this->DFTValues));
     QVector<qreal> index;
     qint64 step = periodSize/NUMBER_OF_COUNTS;
     for(qint64 i = 0; i < this->period->first.length(); i += step){

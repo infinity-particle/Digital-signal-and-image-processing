@@ -9,6 +9,7 @@
 #include <qcustomplot.h>
 #include "tab.h"
 #include "algorithm.h"
+#include "function.h"
 
 class MainWindow : public QMainWindow
 {

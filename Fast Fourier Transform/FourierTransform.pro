@@ -27,9 +27,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     qcustomplot.cpp \
     algorithm.cpp \
-    tab.cpp
+    tab.cpp \
+    function.cpp \
+    fouriertransform.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
     algorithm.h \
-    tab.h
+    tab.h \
+    function.h \
+    fouriertransform.h
