@@ -41,26 +41,26 @@ MainWindow::MainWindow(QWidget *parent) :
     resultZ = convolution->execute(x, y, (*discreteTransform));
     plotter(ui->convolutionZ, t, *resultZ, "t", "z");
 
-    ui->convolutionLabel->setText(QString("Свертка ДПФ. Сумма: " + QString::number(discreteTransform->additionCounter)
-                                       + " Умножение: " + QString::number(discreteTransform->multiplyCounter)));
+    ui->convolutionLabel->setText(QString("DFT. Additions: " + QString::number(discreteTransform->additionCounter)
+                                       + " Multiplication: " + QString::number(discreteTransform->multiplyCounter)));
 
     resultZ = convolution->execute(x, y, (*fastTransform));
     plotter(ui->convolutionZF, t, *resultZ, "t", "z");
 
-    ui->convolutionFLabel->setText(QString("Свертка БПФ. Сумма: " + QString::number(fastTransform->additionCounter)
-                                       + " Умножение: " + QString::number(fastTransform->multiplyCounter)));
+    ui->convolutionFLabel->setText(QString("FFT. Additions: " + QString::number(fastTransform->additionCounter)
+                                       + " Multiplication: " + QString::number(fastTransform->multiplyCounter)));
 
     resultZ = correlation->execute(x, y, (*discreteTransform));
     plotter(ui->correlationZ, t, *resultZ, "t", "z");
 
-    ui->correlationLabel->setText(QString("Корреляция ДПФ. Сумма: " + QString::number(discreteTransform->additionCounter)
-                                       + " Умножение: " + QString::number(discreteTransform->multiplyCounter)));
+    ui->correlationLabel->setText(QString("DFT. Additions: " + QString::number(discreteTransform->additionCounter)
+                                       + " Multiplication: " + QString::number(discreteTransform->multiplyCounter)));
 
     resultZ = correlation->execute(x, y, (*fastTransform));
     plotter(ui->correlationZF, t, *resultZ, "t", "z");
 
-    ui->correlationFLabel->setText(QString("Корреляция БПФ. Сумма: " + QString::number(fastTransform->additionCounter)
-                                       + " Умножение: " + QString::number(fastTransform->multiplyCounter)));
+    ui->correlationFLabel->setText(QString("FFT. Additions: " + QString::number(fastTransform->additionCounter)
+                                       + " Multiplication: " + QString::number(fastTransform->multiplyCounter)));
 
     /* ui->timePlotD->graph(0)->setPen(QColor(50, 50, 50, 255));
     ui->timePlotD->graph(0)->setLineStyle(QCPGraph::lsImpulse);
