@@ -96,11 +96,12 @@ QVector<std::complex<double> > *FastFourierTransform::directTransform(const QVec
 
     QVector<complex<double>> *y = transform(data);
 
-    for (int i = 0; i < data.size(); i++)
+    /*for (int i = 0; i < data.size(); i++)
     {
-        (*y)[i] /= static_cast<double>(data.size());
+        (*y)[i] /= std::complex<double>(data.size(),0.0);
+        //(*y)[i] /= (data.size());
         multiplyCounter += 1;
-    }
+    }*/
 
     return y;
 }

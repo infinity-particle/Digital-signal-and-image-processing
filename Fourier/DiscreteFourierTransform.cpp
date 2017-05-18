@@ -19,7 +19,7 @@ QVector<complex<double>>* DiscreteFourierTransform::directTransform(const QVecto
     for(int k = 0; k < data.size(); k++)
     {
         /* W = e^(-2*pi*i/N) */
-        complex<double> w = pow(e, -2. * complex<double>(0,1) * M_PI / static_cast<double>(data.size()));
+        complex<double> w = pow(e, -2. * complex<double>(0,1) * M_PI / std::complex<double>(data.size(), 0.0));
 
         multiplyCounter += 4;
 
@@ -32,7 +32,8 @@ QVector<complex<double>>* DiscreteFourierTransform::directTransform(const QVecto
             multiplyCounter += 2;
         }
 
-        (*result)[k]= sum / static_cast<double>(data.size());
+        (*result)[k]= sum ;// std::complex<double>(data.size(),0.0);
+       // (*result)[k]= sum / (data.size());
         multiplyCounter += 1;
     }
     return result;
